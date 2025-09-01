@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Добавить источник{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Добавить новый источник</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <div class="d-flex justify-content-between mt-3">
+                    <button type="submit" class="btn btn-success">Сохранить источник</button>
+                    <a href="{% url 'add_quote' %}" class="btn btn-secondary">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

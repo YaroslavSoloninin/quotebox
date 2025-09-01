@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - QuoteBox{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="text-center">
+        {% if quote %}
+            <blockquote class="blockquote">
+                <p class="fs-4">“{{ quote.text }}”</p>
+            </blockquote>
+            <footer class="blockquote-footer">
+                {{ quote.source.name }}
+            </footer>
+        {% else %}
+            <p class="text-muted">Цитат пока нет. Добавьте первую!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
