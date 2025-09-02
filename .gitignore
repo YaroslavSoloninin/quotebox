@@ -1,19 +1,28 @@
-.DS_Store
-Thumbs.db
-
+# Python
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-*.so
-.venv/
-
+*.sqlite3
 *.log
-*.pot
-*.pyc
+
+# Django
+db.sqlite3
 media/
 staticfiles/
-/static/
 
+# Секреты и конфиги
+.env
+*.env
+.pylintrc
+
+# Виртуальное окружение
+venv/
+.env/
+.venv/
+
+# IDE и редакторы
 .idea/
-.idea/**
+.vscode/
+
+# Системные файлы
+.DS_Store
+.qodo
