@@ -1,9 +1,14 @@
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
+from django.views import View
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 import random
 
 from .forms import QuoteForm, SourceForm
-from .models import Quote, Source
+from .models import Quote, Source, Vote
 
 
 class QuoteCreateView(CreateView):
@@ -46,3 +51,27 @@ class HomeView(TemplateView):
             context["quote"] = None
 
         return context
+
+
+@method_decorator(login_required, name='dispatch')
+class AjaxVoteView(View):
+    def post(self, request, pk, vote_type):
+        quote = get_object_or_404(Quote, pk=pk)
+        value = 1 if vote_type == 'like' else -1
+
+        vote, created = Vote.objects.update_or_create(
+            user=request.user,
+            quote=quote,
+            defaults={'value': value}
+        )
+
+        quote.likes = quote.votes.filter(value=1).count()
+        quote.dislikes = quote.votes.filter(value=-1).count()
+        quote.save()
+
+        data = {
+            'likes': quote.likes,
+            'dislikes': quote.dislikes,
+            'user_vote': vote.value
+        }
+        return JsonResponse(data)

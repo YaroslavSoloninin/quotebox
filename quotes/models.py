@@ -39,11 +39,19 @@ class Quote(models.Model):
     def __str__(self):
         return f"{self.text[:30]}..."
 
+    @property
+    def likes_count(self):
+        return self.votes.filter(value=1).count()
+
+    @property
+    def dislikes_count(self):
+        return self.votes.filter(value=-1).count()
+
 
 class Vote(models.Model):
     VOTE_CHOICES = (
-        (1, 'Лайк'),
-        (-1, 'Дизлайк')
+        (1, 'like'),
+        (-1, 'dislike')
     )
     user = models.ForeignKey(
         User,
