@@ -7,14 +7,16 @@ class QuoteForm(forms.ModelForm):
         queryset=Source.objects.filter(type='book'),
         empty_label="Выберите книгу",
         required=False,
-        widget=forms.Select(attrs={"class": "form-control"})
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label=''
     )
 
     movie = forms.ModelChoiceField(
         queryset=Source.objects.filter(type='movie'),
         empty_label="Выберите фильм",
         required=False,
-        widget=forms.Select(attrs={"class": "form-control"})
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label=''
     )
 
     class Meta:

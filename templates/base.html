@@ -7,8 +7,6 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
-
-    <!-- Навигация -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">QuoteBox</a>
@@ -21,24 +19,31 @@
                             👤 {{ user.username }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{% url 'profile' %}">Профиль</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Выйти</a></li>
-                        </ul>
+                            {#   <li><a class="dropdown-item" href="{% url 'profile' %}">Профиль</a></li> #}
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="post" action="{% url 'logout' %}" style="margin: 0;">
+                                        {% csrf_token %}
+                                        <div class="text-center">
+                                            <button type="submit" class="dropdown-item text-danger">
+                                                Выйти
+                                            </button>
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
                     </div>
                 {% else %}
-{#                    <a href="{% url 'login' %}" class="btn btn-outline-light">Войти</a>#}
+                    <a href="{% url 'login' %}" class="btn btn-outline-light">Войти</a>
                 {% endif %}
             </div>
         </div>
     </nav>
 
-    <!-- Контент -->
     <main class="container flex-grow-1 py-4">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Подвал -->
     <footer class="bg-dark text-light text-center py-2 mt-auto">
         <small>© 2025 QuoteBox</small>
     </footer>

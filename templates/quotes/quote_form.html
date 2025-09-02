@@ -11,7 +11,6 @@
             <form method="post" novalidate>
                 {% csrf_token %}
 
-                {# Ошибки всей формы (clean и т.п.) #}
                 {% if form.non_field_errors %}
                     <div class="alert alert-danger">
                         {% for error in form.non_field_errors %}
@@ -20,7 +19,6 @@
                     </div>
                 {% endif %}
 
-                <!-- Поле: текст цитаты -->
                 <div class="mb-3">
                     {{ form.text.label_tag }}
                     {{ form.text }}
@@ -31,32 +29,20 @@
                     {% endfor %}
                 </div>
 
-                <!-- Поля: книга или фильм -->
-                <div class="row mb-3">
+                <div class="row mb-3 align-items-center">
                     <div class="col">
-                        {{ form.book.label_tag }}
                         {{ form.book }}
-                        {% for error in form.book.errors %}
-                            <div class="invalid-feedback d-block">
-                                {{ error }}
-                            </div>
-                        {% endfor %}
                     </div>
-                    <div class="col-auto text-center mt-2 mt-md-0">
-                        или
+                
+                    <div class="col-auto text-center">
+                        <span class="fw-bold">или</span>
                     </div>
+                
                     <div class="col">
-                        {{ form.movie.label_tag }}
                         {{ form.movie }}
-                        {% for error in form.movie.errors %}
-                            <div class="invalid-feedback d-block">
-                                {{ error }}
-                            </div>
-                        {% endfor %}
                     </div>
                 </div>
 
-                <!-- Поле: вес -->
                 <div class="mb-3">
                     {{ form.weight.label_tag }}
                     {{ form.weight }}
@@ -67,14 +53,12 @@
                     {% endfor %}
                 </div>
 
-                <!-- Кнопки -->
                 <div class="d-flex justify-content-between mt-4">
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                     <a href="{% url 'home' %}" class="btn btn-secondary">Отмена</a>
                 </div>
             </form>
 
-            <!-- Добавить новый источник -->
             <div class="text-center mt-4">
                 <p>Не нашли источник?</p>
                 <a href="{% url 'source_add' %}" class="btn btn-outline-success">
