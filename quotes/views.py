@@ -37,7 +37,11 @@ class HomeView(TemplateView):
             weighted_quotes = []
             for q in quotes:
                 weighted_quotes.extend([q] * q.weight)
-            context["quote"] = random.choice(weighted_quotes)
+            # context["quote"] = random.choice(weighted_quotes)
+            quote = random.choice(weighted_quotes)
+            quote.views += 1
+            quote.save()
+            context['quote'] = quote
         else:
             context["quote"] = None
 
