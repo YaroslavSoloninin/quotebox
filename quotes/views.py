@@ -1,6 +1,6 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, ListView
 from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -75,3 +75,20 @@ class AjaxVoteView(View):
             'user_vote': vote.value
         }
         return JsonResponse(data)
+
+
+def top_quotes(request):
+    sort_by = request.GET.get("sort_by", "likes")
+
+    if sort_by == "dislikes":
+        quotes = Quote.objects.order_by("-dislikes")[:10]
+    elif sort_by == "views":
+        quotes = Quote.objects.order_by("-views")[:10]
+    else:
+        quotes = Quote.objects.order_by("-likes")[:10]
+
+    return render(request,
+                  "quotes/top_quotes.html",
+                  {"quotes": quotes, "sort_by": sort_by,}
+                  )
+

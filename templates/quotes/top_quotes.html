@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Топ цитат - QuoteBox{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center mb-5">Топ 10 цитат</h2>
+
+        <form method="get" class="text-center mb-4">
+            <label for="sort_by" class="me-2">Сортировать по:</label>
+            <select name="sort_by" id="sort_by" class="form-select d-inline-block w-auto" onchange="this.form.submit()">
+                <option value="likes" {% if sort_by == "likes" %}selected{% endif %}>Лайкам</option>
+                <option value="dislikes" {% if sort_by == "dislikes" %}selected{% endif %}>Дизлайкам</option>
+                <option value="views" {% if sort_by == "views" %}selected{% endif %}>Просмотрам</option>
+            </select>
+        </form>
+        {% if quotes %}
+            <div class="row g-4 justify-content-center">
+                {% for quote in quotes %}
+                    <div class="col-12 col-md-10 col-lg-8">
+                        <div class="card shadow-lg p-4 position-relative" style="min-height: 140px;">
+                            <blockquote class="blockquote mb-3">
+                                <p class="fs-5">“{{ quote.text }}”</p>
+                            </blockquote>
+
+                            <footer class="blockquote-footer mb-3">
+                                {% if quote.source.type == 'book' %}
+                                    Книга "{{ quote.source.name }}"
+                                {% else %}
+                                    Кинофильм "{{ quote.source.name }}"
+                                {% endif %}
+                            </footer>
+
+                            <div style="position: absolute; bottom: 15px; right: 20px;"
+                                 class="d-flex align-items-center text-muted">
+                                <img src="{% static 'img/eye.png' %}" alt="просмотры" width="20" height="20"
+                                     class="me-1">
+                                <span>{{ quote.views }}</span>
+                            </div>
+
+                            <div style="position: absolute; bottom: 15px; left: 20px; display: flex; gap: 15px; color: #555; font-weight: 500;">
+                                <span>👍 {{ quote.likes }}</span>
+                                <span>👎 {{ quote.dislikes }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted text-center">Цитат пока нет.</p>
+        {% endif %}
+    </div>
+{% endblock %}

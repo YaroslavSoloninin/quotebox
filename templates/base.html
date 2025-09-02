@@ -11,7 +11,13 @@
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">QuoteBox</a>
             <div class="d-flex ms-auto">
-                <a href="{% url 'add_quote' %}" class="btn btn-outline-light me-2">➕ Добавить цитату</a>
+                <a href="{% url 'top_quotes' %}" class="btn btn-outline-light me-2">
+                    ⭐ Топ-10 цитат
+                </a>
+
+                <a href="{% url 'add_quote' %}" class="btn btn-outline-light me-2">
+                    ➕ Добавить цитату
+                </a>
 
                 {% if user.is_authenticated %}
                     <div class="dropdown">
@@ -19,19 +25,19 @@
                             👤 {{ user.username }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            {#   <li><a class="dropdown-item" href="{% url 'profile' %}">Профиль</a></li> #}
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form method="post" action="{% url 'logout' %}" style="margin: 0;">
-                                        {% csrf_token %}
-                                        <div class="text-center">
-                                            <button type="submit" class="dropdown-item text-danger">
-                                                Выйти
-                                            </button>
-                                        </div>
-                                    </form>
-                                </li>
-                            </ul>
+                            {# <li><a class="dropdown-item" href="{% url 'profile' %}">Профиль</a></li> #}
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="post" action="{% url 'logout' %}" style="margin: 0;">
+                                    {% csrf_token %}
+                                    <div class="text-center">
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            Выйти
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
                 {% else %}
                     <a href="{% url 'login' %}" class="btn btn-outline-light">Войти</a>

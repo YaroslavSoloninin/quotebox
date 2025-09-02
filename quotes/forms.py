@@ -4,7 +4,7 @@ from .models import Quote, Source
 
 class QuoteForm(forms.ModelForm):
     book = forms.ModelChoiceField(
-        queryset=Source.objects.filter(type='book'),
+        queryset=Source.objects.filter(type='book').order_by('name'),
         empty_label="Выберите книгу",
         required=False,
         widget=forms.Select(attrs={"class": "form-control"}),
@@ -12,7 +12,7 @@ class QuoteForm(forms.ModelForm):
     )
 
     movie = forms.ModelChoiceField(
-        queryset=Source.objects.filter(type='movie'),
+        queryset=Source.objects.filter(type='movie').order_by('name'),
         empty_label="Выберите фильм",
         required=False,
         widget=forms.Select(attrs={"class": "form-control"}),
